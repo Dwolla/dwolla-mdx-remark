@@ -1,3 +1,4 @@
+const debug = require("debug")("dwolla-mdx-remark");
 const glob = require("glob");
 const matter = require("gray-matter");
 const path = require("path");
@@ -6,9 +7,11 @@ const DEFAULT_LAYOUTS_DIR = "layouts";
 const DEFAULT_LAYOUTS_FILE = "index";
 
 function fileExists(path) {
+    debug("Checking if file exists at following path: ", path);
     return new Promise((resolve, reject) => {
         glob(path, null, (err, files) => {
             if (err) return reject(err);
+            debug("Glob returned with if file exists? ", (files.length !== 0));
             return resolve(files.length !== 0);
         });
     });
@@ -32,12 +35,14 @@ module.exports = () => async (tree, file) => {
     const resourcePath = file.history[0]
         .replace(path.join(file.cwd, "pages"), "")
         .substring(1);
+    debug("Processing file: ", resourcePath);
 
     // Since this package is pure ESM, it must be imported asynchronously within the
     // function and cannot be imported at the top of the script file.
     const {default: stringifyObject} = await import("stringify-object");
     let {data: frontMatter} = matter(file.contents);
     frontMatter = {...frontMatter, __resourcePath: resourcePath};
+    debug("Extracted following frontmatter: ", frontMatter);
 
     // Export the frontmatter variable to the AST
     tree.children.push({

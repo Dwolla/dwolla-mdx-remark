@@ -1,3 +1,4 @@
+const debug = require("debug")("dwolla-mdx-remark");
 const remarkPlugin = require("./remark-plugin");
 
 module.exports = (pluginOptions = {}) => (nextConfig = {}) => ({
@@ -8,6 +9,7 @@ module.exports = (pluginOptions = {}) => (nextConfig = {}) => ({
     webpack(config, options) {
         const expandedRemarkPlugins = [...(pluginOptions?.options?.remarkPlugins || []), remarkPlugin];
         const expandedOptions = {...pluginOptions?.options, remarkPlugins: expandedRemarkPlugins};
+        debug("Using Expanded Options: ", expandedOptions);
 
         config.module.rules.push({
             test: pluginOptions.extension || /\.mdx?$/,

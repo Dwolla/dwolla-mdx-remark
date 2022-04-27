@@ -4,6 +4,7 @@ specifiers:
   '@babel/core': ^7.17.9
   '@mdx-js/loader': ^1.6.22
   cross-spawn: ^7.0.3
+  debug: ^4.3.4
   glob: ^8.0.1
   gray-matter: ^4.0.3
   jest: ^28.0.2
@@ -15,6 +16,7 @@ specifiers:
   webpack: ^5.72.0
 
 dependencies:
+  debug: 4.3.4
   glob: 8.0.1
   gray-matter: 4.0.3
   stringify-object: 4.0.1
@@ -1781,7 +1783,6 @@ packages:
         optional: true
     dependencies:
       ms: 2.1.2
-    dev: true
 
   /dedent/0.7.0:
     resolution: {integrity: sha1-JJXduvbrh0q7Dhvp3yLS5aVEMmw=}
@@ -3393,7 +3394,6 @@ packages:
 
   /ms/2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
-    dev: true
 
   /nanoid/3.3.3:
     resolution: {integrity: sha512-p1sjXuopFs0xg+fPASzQ28agW1oHD7xDsd9Xkf3T15H3c/cifrFHVwrh74PdoklAPi+i7MdRsE47vm2r6JoB+w==}
