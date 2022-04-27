@@ -73,7 +73,7 @@ module.exports = () => async (tree, file) => {
         );
 
         // Confirm that the layout exists - if it doesn't, don't inject
-        if (await fileExists(`${layoutPath}.*(js|jsx)`)) {
+        if (await fileExists(`${layoutPath}.*(js|jsx|ts|tsx)`)) {
             // Import our layout in the AST
             tree.children.push({
                 type: "import",
