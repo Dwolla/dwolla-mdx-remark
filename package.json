@@ -1,6 +1,6 @@
 {
   "name": "dwolla-mdx-remark",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "NextJS MDX remark plugin used as a replacement for next-mdx-enhanced in Dwolla's developer portal",
   "license": "MIT",
   "author": "Dwolla, Inc. (https://dwolla.com)",
