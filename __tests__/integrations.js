@@ -38,10 +38,6 @@ async function compileNextJs(projectPath) {
     spawn.sync(nextLocal, ["build", projectPath], {
         cwd: projectPath, stdio: "inherit"
     });
-
-    spawn.sync(nextLocal, ["export", projectPath], {
-        cwd: projectPath, stdio: "inherit"
-    });
     return path.join(projectPath, "out");
 }
 
