@@ -19,11 +19,7 @@ export default (pluginOptions = {}) => (nextConfig = {}) => ({
     ),
     webpack(config, options) {
         const expandedRemarkPlugins = [...(pluginOptions?.options?.remarkPlugins || []), remarkPlugin];
-        const expandedOptions = {
-            ...pluginOptions?.options,
-            providerImportSource: '@mdx-js/react',
-            remarkPlugins: expandedRemarkPlugins
-        };
+        const expandedOptions = {...pluginOptions?.options, remarkPlugins: expandedRemarkPlugins};
         debug("Using Expanded Options: ", expandedOptions);
 
         config.module.rules.push({
