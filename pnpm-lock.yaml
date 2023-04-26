@@ -4,6 +4,9 @@ dependencies:
   debug:
     specifier: ^4.3.4
     version: 4.3.4
+  estree-util-value-to-estree:
+    specifier: ^3.0.1
+    version: 3.0.1
   glob:
     specifier: ^10.2.2
     version: 10.2.2
@@ -17,16 +20,13 @@ devDependencies:
     version: 7.21.4
   '@mdx-js/loader':
     specifier: ^2.3.0
-    version: 2.3.0(webpack@5.80.0)
+    version: 2.3.0(webpack@5.81.0)
   '@mdx-js/react':
     specifier: ^2.3.0
     version: 2.3.0(react@18.2.0)
   cross-spawn:
     specifier: ^7.0.3
     version: 7.0.3
-  estree-util-value-to-estree:
-    specifier: ^3.0.1
-    version: 3.0.1
   jest:
     specifier: ^29.5.0
     version: 29.5.0
@@ -43,8 +43,8 @@ devDependencies:
     specifier: ^5.0.0
     version: 5.0.0
   webpack:
-    specifier: ^5.80.0
-    version: 5.80.0
+    specifier: ^5.81.0
+    version: 5.81.0
 
 packages:
 
@@ -659,14 +659,14 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
-  /@mdx-js/loader@2.3.0(webpack@5.80.0):
+  /@mdx-js/loader@2.3.0(webpack@5.81.0):
     resolution: {integrity: sha512-IqsscXh7Q3Rzb+f5DXYk0HU71PK+WuFsEhf+mSV3fOhpLcEpgsHvTQ2h0T6TlZ5gHOaBeFjkXwB52by7ypMyNg==}
     peerDependencies:
       webpack: '>=4'
     dependencies:
       '@mdx-js/mdx': 2.3.0
       source-map: 0.7.4
-      webpack: 5.80.0
+      webpack: 5.81.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -881,7 +881,6 @@ packages:
 
   /@types/estree@1.0.1:
     resolution: {integrity: sha512-LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==}
-    dev: true
 
   /@types/graceful-fs@4.1.6:
     resolution: {integrity: sha512-Sig0SNORX9fdW+bQuTEovKj3uHcUL6LQKbCrrqb1X7J6/ReAbhCXRAhc+SMejhLELFj2QcyuxmUooZ4bt5ReSw==}
@@ -1605,7 +1604,7 @@ packages:
     dependencies:
       '@types/estree': 1.0.1
       is-plain-obj: 4.1.0
-    dev: true
+    dev: false
 
   /estree-util-visit@1.2.1:
     resolution: {integrity: sha512-xbgqcrkIVbIG+lI/gzbvd9SGTJL4zqJKBFttUl5pP27KhAjtMKbX/mQXJ7qgyXpMgVy/zvpm0xoQQaGL8OloOw==}
@@ -1921,7 +1920,6 @@ packages:
   /is-plain-obj@4.1.0:
     resolution: {integrity: sha512-+Pgi+vMuUNkJyExiMBt5IlFoMyKnr5zhJ4Uspz58WOhBF5QoIZkFyNHIbBAtHwzVAgk5RtndVNsDRN61/mmDqg==}
     engines: {node: '>=12'}
-    dev: true
 
   /is-reference@3.0.1:
     resolution: {integrity: sha512-baJJdQLiYaJdvFbJqXrcGv3WU3QCzBlUcI5QhbesIm6/xPsvmO+2CDoi/GMOFBQEQm+PXkwOPrp9KK5ozZsp2w==}
@@ -3514,7 +3512,7 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /terser-webpack-plugin@5.3.7(webpack@5.80.0):
+  /terser-webpack-plugin@5.3.7(webpack@5.81.0):
     resolution: {integrity: sha512-AfKwIktyP7Cu50xNjXF/6Qb5lBNzYaWpU6YfoX3uZicTx0zTy0stDDCsvjDapKsSDvOeWo5MEq4TmdBy2cNoHw==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
@@ -3535,7 +3533,7 @@ packages:
       schema-utils: 3.1.2
       serialize-javascript: 6.0.1
       terser: 5.17.1
-      webpack: 5.80.0
+      webpack: 5.81.0
     dev: true
 
   /terser@5.17.1:
@@ -3737,8 +3735,8 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
-  /webpack@5.80.0:
-    resolution: {integrity: sha512-OIMiq37XK1rWO8mH9ssfFKZsXg4n6klTEDL7S8/HqbAOBBaiy8ABvXvz0dDCXeEF9gqwxSvVk611zFPjS8hJxA==}
+  /webpack@5.81.0:
+    resolution: {integrity: sha512-AAjaJ9S4hYCVODKLQTgG5p5e11hiMawBwV2v8MYLE0C/6UAGLuAF4n1qa9GOwdxnicaP+5k6M5HrLmD4+gIB8Q==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     peerDependencies:
@@ -3768,7 +3766,7 @@ packages:
       neo-async: 2.6.2
       schema-utils: 3.1.2
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.7(webpack@5.80.0)
+      terser-webpack-plugin: 5.3.7(webpack@5.81.0)
       watchpack: 2.4.0
       webpack-sources: 3.2.3
     transitivePeerDependencies:
