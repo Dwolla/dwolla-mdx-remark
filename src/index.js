@@ -1,7 +1,18 @@
-const debug = require("debug")("dwolla-mdx-remark");
-const remarkPlugin = require("./remark-plugin");
+import debugInit from "debug";
+import remarkPlugin from "./remark-plugin.js";
+import {createRequire} from "node:module";
 
-module.exports = (pluginOptions = {}) => (nextConfig = {}) => ({
+const debug = debugInit("dwolla-mdx-remark");
+
+/**
+ * `createRequire` is used in this context because at the time of writing, Node's `import.meta.resolve`
+ * function is still experimental. If the function ever becomes stable, however, that should be used instead.
+ *
+ * @see https://nodejs.org/api/esm.html#importmetaresolvespecifier-parent}
+ */
+const require = createRequire(import.meta.url);
+
+export default (pluginOptions = {}) => (nextConfig = {}) => ({
     ...nextConfig,
     pageExtensions: Array.from(
         new Set([...(nextConfig.pageExtensions || []), "md", "mdx"])

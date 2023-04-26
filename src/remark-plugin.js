@@ -1,20 +1,18 @@
-const debug = require("debug")("dwolla-mdx-remark");
-const glob = require("glob");
-const matter = require("gray-matter");
-const path = require("path");
+import debugInit from "debug";
+import {glob} from "glob";
+import matter from "gray-matter";
+import path from "path";
+import {valueToEstree} from "estree-util-value-to-estree";
+
+const debug = debugInit("dwolla-mdx-remark");
 
 const DEFAULT_LAYOUTS_DIR = "layouts";
 const DEFAULT_LAYOUTS_FILE = "index";
 
-function fileExists(path) {
+async function fileExists(path) {
     debug("Checking if file exists at following path: ", path);
-    return new Promise((resolve, reject) => {
-        glob(path, null, (err, files) => {
-            if (err) return reject(err);
-            debug("Glob returned with if file exists? ", (files.length !== 0));
-            return resolve(files.length !== 0);
-        });
-    });
+    const files = await glob(path);
+    return files.length !== 0;
 }
 
 function normalizeToUnixPath(str) {
@@ -29,7 +27,7 @@ function normalizeToUnixPath(str) {
  * For more information regarding MDXAST, please see here:
  * https://github.com/mdx-js/specification#mdxast
  */
-module.exports = () => async (tree, file) => {
+export default () => async (tree, file) => {
     // Extract the resource path for this specific file for injection. Used because of legacy
     // dependency on `next-mdx-enhanced`: https://github.com/hashicorp/next-mdx-enhanced/blob/main/index.js#L118-L120
     const resourcePath = file.history[0]
@@ -39,15 +37,36 @@ module.exports = () => async (tree, file) => {
 
     // Since this package is pure ESM, it must be imported asynchronously within the
     // function and cannot be imported at the top of the script file.
-    const {default: stringifyObject} = await import("stringify-object");
-    let {data: frontMatter} = matter(file.contents);
+    let {data: frontMatter} = matter(file.value);
     frontMatter = {...frontMatter, __resourcePath: resourcePath};
     debug("Extracted following frontmatter: ", frontMatter);
 
     // Export the frontmatter variable to the AST
     tree.children.push({
-        type: "export",
-        value: `export const frontMatter = ${stringifyObject(frontMatter)}`,
+        type: "mdxjsEsm",
+        data: {
+            estree: {
+                type: "Program",
+                sourceType: "module",
+                body: [
+                    {
+                        type: "ExportNamedDeclaration",
+                        specifiers: [],
+                        declaration: {
+                            type: "VariableDeclaration",
+                            kind: "const",
+                            declarations: [
+                                {
+                                    type: "VariableDeclarator",
+                                    id: {type: "Identifier", name: "frontMatter"},
+                                    init: valueToEstree(frontMatter)
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
     });
 
     // Remove the frontmatter node from the AST, because it has already
@@ -76,16 +95,110 @@ module.exports = () => async (tree, file) => {
         if (await fileExists(`${layoutPath}.*(js|jsx|ts|tsx)`)) {
             // Import our layout in the AST
             tree.children.push({
-                type: "import",
-                value: `import Layout from "${normalizeToUnixPath(layoutPath)}"`,
+                type: "mdxjsEsm",
+                data: {
+                    estree: {
+                        type: "Program",
+                        sourceType: "module",
+                        body: [
+                            {
+                                type: "ImportDeclaration",
+                                specifiers: [
+                                    {
+                                        type: "ImportDefaultSpecifier",
+                                        local: {
+                                            type: "Identifier",
+                                            name: "Layout"
+                                        }
+                                    }
+                                ],
+                                source: valueToEstree(normalizeToUnixPath(layoutPath))
+                            }
+                        ]
+                    }
+                }
             });
 
             // Add our default export for the layout we're using.
             // This behavior should mimic https://nextjs.org/docs/advanced-features/using-mdx#layouts
             tree.children.push({
-                type: "export",
-                default: true,
-                value: `export default Layout`,
+                type: "mdxjsEsm",
+                data: {
+                    estree: {
+                        type: "Program",
+                        sourceType: "module",
+                        body: [
+                            {
+                                type: "ExportDefaultDeclaration",
+                                declaration: {
+                                    type: "ArrowFunctionExpression",
+                                    expression: true,
+                                    params: [
+                                        {
+                                            type: "ObjectPattern",
+                                            properties: [
+                                                {
+                                                    type: "Property",
+                                                    key: {
+                                                        type: "Identifier",
+                                                        name: "children"
+                                                    },
+                                                    kind: "init",
+                                                    value: {
+                                                        type: "Identifier",
+                                                        name: "children"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    body: {
+                                        type: "JSXElement",
+                                        openingElement: {
+                                            type: "JSXOpeningElement",
+                                            attributes: [
+                                                {
+                                                    type: "JSXAttribute",
+                                                    name: {
+                                                        type: "JSXIdentifier",
+                                                        name: "frontMatter"
+                                                    },
+                                                    value: {
+                                                        type: "JSXExpressionContainer",
+                                                        expression: {
+                                                            type: "Identifier",
+                                                            name: "frontMatter"
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            name: {
+                                                type: "JSXIdentifier",
+                                                name: "Layout"
+                                            }
+                                        },
+                                        closingElement: {
+                                            type: "JSXClosingElement",
+                                            name: {
+                                                type: "JSXIdentifier",
+                                                name: "Layout"
+                                            }
+                                        },
+                                        children: [
+                                            {
+                                                type: "JSXExpressionContainer",
+                                                expression: {
+                                                    type: "Identifier",
+                                                    name: "children"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
             });
         }
     }

@@ -1,9 +1,10 @@
 {
   "name": "dwolla-mdx-remark",
-  "version": "1.1.0",
+  "type": "module",
+  "version": "2.0.0",
   "description": "NextJS MDX remark plugin used as a replacement for next-mdx-enhanced in Dwolla's developer portal",
   "license": "MIT",
-  "author": "Dwolla, Inc. (https://dwolla.com)",
+  "author": "Dwolla, Inc. <developers@dwolla.com> (https://developers.dwolla.com)",
   "contributors": [
     "James Coon <jcoon@dwolla.com>"
   ],
@@ -17,25 +18,26 @@
   },
   "dependencies": {
     "debug": "^4.3.4",
-    "glob": "^8.0.1",
-    "gray-matter": "^4.0.3",
-    "stringify-object": "^4.0.1"
+    "estree-util-value-to-estree": "^3.0.1",
+    "glob": "^10.2.2",
+    "gray-matter": "^4.0.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.10",
-    "@mdx-js/loader": "^1.6.22",
+    "@babel/core": "^7.21.4",
+    "@mdx-js/loader": "^2.3.0",
+    "@mdx-js/react": "^2.3.0",
     "cross-spawn": "^7.0.3",
-    "jest": "^28.0.3",
-    "next": "^12.1.5",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "rimraf": "^3.0.2",
-    "webpack": "^5.72.0"
+    "jest": "^29.5.0",
+    "next": "^13.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^5.0.0",
+    "webpack": "^5.81.0"
   },
   "peerDependencies": {
-    "@mdx-js/loader": "^1.6.22",
-    "@mdx-js/react": "*",
-    "next": "^11.0.0 || ^12.0.0"
+    "@mdx-js/loader": "^2.0.0",
+    "@mdx-js/react": "^2.0.0",
+    "next": "^11.0.0 || ^12.0.0 || ^13.0.0"
   },
   "exports": {
     ".": {

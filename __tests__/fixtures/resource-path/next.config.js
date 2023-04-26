@@ -1,5 +1,6 @@
-const withDwollaMdx = require("../../../");
+import withDwollaMdx from "../../../src/index.js";
 
-module.exports = withDwollaMdx()({
+export default withDwollaMdx()({
+    output: "export",
     pageExtensions: ["js"]
 });
